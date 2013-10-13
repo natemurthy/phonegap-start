@@ -1,0 +1,9 @@
+﻿header, button, .button, #slider-swiper {
+	background-color: Orange;
+}
+.st-menu .selected {
+	border-color: Orange;
+}
+a:link {
+	color: Orange;
+}
