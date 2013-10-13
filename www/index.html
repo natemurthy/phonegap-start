@@ -26,9 +26,9 @@
 					</header>
 					
 					<div class="content vertical-centered">
-						<form id="signinform" action="ring.html">
+						<form id="signinform" onsubmit="createName(); return false;">
 							<input type="name" id="name" placeholder="NAME"/>
-							<input type="submit" class="button" value="ENTER YOUR NAME" onclick="app.createName();"/>
+							<input type="submit" class="button" value="ENTER YOUR NAME"/>
 						</form>
 					</div>  
 				</div><!-- /st-content-inner -->
@@ -38,13 +38,32 @@
 
 	
 	<script src="js/jquery-1.10.2.min.js"></script>
-	
 	<script src="js/classie.js"></script>
 	<script src="js/custom.js"></script>
-	<!-- <script type="text/javascript" src="phonegap.js"></script> -->
-    <script type="text/javascript" src="js/index.js"></script>
 	<script type="text/javascript">
-    	app.initialize();
+    	var RingMeDb = window.openDatabase("RingMe", "1.0", "RingMe", 10);
+    	
+    	function createName() {
+    		var name = document.getElementById("name").value;
+    		RingMeDb.transaction(
+    			function(tx) {
+    				tx.executeSql('CREATE TABLE IF NOT EXISTS NAME (id unique, name)');
+    				tx.executeSql('INSERT INTO NAME (id,name) VALUES (1,?)',[name]);
+    			},
+    			errorCB
+    		);
+    		setTimeout(
+    			function() {
+    				location = 'ring.html'
+    			},
+    			500
+    		);
+    	}
+    	
+    	function errorCB(err) {
+    		alert("Error processing SQL: "+err.code);
+		}
+		
     </script>
 </body>
 </html>

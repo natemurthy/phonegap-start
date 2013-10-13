@@ -33,7 +33,6 @@
     		$.ajax({
     			type: "POST",
     			url: "http://ec2-54-242-78-121.compute-1.amazonaws.com:3000/collectionapi/stylists",
-    			// The key needs to match your method's input parameter (case-sensitive).
     			data: nameJson,
     			contentType: "application/json; charset=utf-8",
     			dataType: "json",
@@ -42,8 +41,6 @@
     			failure: function(errMsg) { console.log("ajax fail: "+ errMsg); }
 			});
 		}
-		
-		
 
 		function errorCB(err) {
     		alert("Error processing SQL: "+err.code);
