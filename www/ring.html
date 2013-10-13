@@ -14,12 +14,40 @@
 	<div class="page-wrap">
 		<nav>
 			<ul class="nav">
-				<li><a href="#" class="icon-bell"></a></li>
+				<li><a onclick="RingMeDb.transaction(sendAlert,errorCB);" href="#" class="icon-bell"></a></li>
 			</ul>
 		</nav>
 	</div>
+	<script src="js/jquery-1.10.2.min.js"></script>
 	<script type="text/javascript">
-	
+		var RingMeDb = window.openDatabase("RingMe", "1.0", "RingMe", 10);
+		
+		function sendAlert(tx) {
+    		tx.executeSql('SELECT * FROM NAME', [], querySuccess, errorCB);
+		}
+
+		function querySuccess(tx, results) {
+    		var nameJson = {"name": results.rows.item(0).name}
+    		console.log(nameJson)
+    		
+    		$.ajax({
+    			type: "POST",
+    			url: "http://ec2-54-242-78-121.compute-1.amazonaws.com:3000/collectionapi/stylists",
+    			// The key needs to match your method's input parameter (case-sensitive).
+    			data: nameJson,
+    			contentType: "application/json; charset=utf-8",
+    			dataType: "json",
+    			crossDomain: true,
+    			success: function(data) { console.log("ajax success: " + data); },
+    			failure: function(errMsg) { console.log("ajax fail: "+ errMsg); }
+			});
+		}
+		
+		
+
+		function errorCB(err) {
+    		alert("Error processing SQL: "+err.code);
+		}
 	</script>
 </body>
 </html>
