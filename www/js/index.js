@@ -39,7 +39,7 @@ var app = {
 	initializeDb: function(tx) {
     	tx.executeSql('CREATE TABLE IF NOT EXISTS NAME (id unique, name)');
     },
-    
+        
     querySuccess: function(tx, results) {
         console.log("Returned rows = " + results.rows.length);
         // this will be true since it was a select statement and so rowsAffected was 0
@@ -53,15 +53,16 @@ var app = {
     
     onDeviceReady: function() {
         var RingMeDb = window.openDatabase("RingMe", "1.0", "RingMe", 10);
-        RingMeDb.transaction(initializeDb,errorCB);
+        RingMeDb.transaction(this.initializeDb,this.errorCB);
     },
     
-    createName: function(tx) {
+    createName: function() {
     	var name = document.getElementById("name").value;
     	var RingMeDb = window.openDatabase("RingMe", "1.0", "RingMe", 10);
+    	RingMeDb.transaction(this.initializeDb,this.errorCB);
     	RingMeDb.transaction(function(tx) {
-    		tx.executeSql('INSERT INTO NAME (id,name) VALUES (1,'+name+')');
-    	},errorCB);
+    		tx.executeSql('INSERT INTO NAME (id,name) VALUES (1,?)',[name]);
+    	},this.errorCB);
     	
     }
     
