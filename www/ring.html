@@ -28,14 +28,13 @@
 
 		function querySuccess(tx, results) {
     		var nameJson = {"name": results.rows.item(0).name}
-    		console.log(nameJson)
+    		console.log(JSON.stringify(nameJson))
     		
     		$.ajax({
     			type: "POST",
-    			url: "http://ec2-54-242-78-121.compute-1.amazonaws.com:3000/collectionapi/stylists",
-    			data: nameJson,
-    			contentType: "application/json; charset=utf-8",
-    			dataType: "json",
+    			url: "http://ec2-54-224-139-122.compute-1.amazonaws.com:3000/collectionapi/stylists",
+    			data: JSON.stringify(nameJson),
+    			contentType: "application/x-www-form-urlencoded",
     			crossDomain: true,
     			success: function(data) { console.log("ajax success: " + data); },
     			failure: function(errMsg) { console.log("ajax fail: "+ errMsg); }
