@@ -61,7 +61,11 @@
     	}
     	
     	function errorCB(err) {
-    		alert("Error processing SQL: "+err.code);
+    		if (err.code == 6) {
+    			alert("Your name is already in the database");
+    		} else {
+    			alert("Error processing SQL: "+err.code);
+    		}
 		}
 		
     </script>

@@ -42,11 +42,7 @@
 		}
 
 		function errorCB(err) {
-			if (err.code == 1) {
-				alert("Your name is already in the database");
-			} else {
-    			alert("Error processing SQL: "+err.code);
-    		}
+    		alert("Error processing SQL: "+err.code);
 		}
 	</script>
 </body>
